@@ -1,4 +1,4 @@
-<!doctype html>
+ <!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -35,7 +35,6 @@
   --rule: #2a343c; --accent: #5cc3c9; --accent-ink: #08272a; --accent-soft: #14343a; --warm: #e58a5e; color-scheme: dark;
 }
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
 body {
   margin: 0; background: var(--bg); color: var(--fg);
   font-family: var(--body); font-size: 17px; line-height: 1.62;
@@ -66,7 +65,7 @@ nav a[aria-current="page"] { color: var(--accent); border-bottom-color: var(--ac
 .js .page { display: none; }
 .js .page.on { display: block; animation: rise 0.28s ease-out; }
 @keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-@media (prefers-reduced-motion: reduce) { .js .page.on { animation: none; } html { scroll-behavior: auto; } }
+@media (prefers-reduced-motion: reduce) { .js .page.on { animation: none; } }
 .page { padding-block: 44px 64px; }
 h1.title { font-family: var(--display); font-weight: 700; font-size: 2.3rem; line-height: 1.12; letter-spacing: -0.015em; margin: 0 0 8px; }
 .kicker { font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin: 0 0 10px; }
@@ -174,7 +173,7 @@ footer { border-top: 1px solid var(--rule); padding-block: 26px 40px; color: var
 
 <main class="gutter">
 
-  <section class="page on" id="about" data-title="Muhammad Adam">
+  <section class="page on" id="p-about" data-title="Muhammad Adam">
     <div class="hero">
       <div>
         <p class="kicker">Hi, nice to meet you</p>
@@ -223,7 +222,7 @@ footer { border-top: 1px solid var(--rule); padding-block: 26px 40px; color: var
     </ul>
   </section>
 
-  <section class="page" id="research" data-title="Research | Muhammad Adam">
+  <section class="page" id="p-research" data-title="Research | Muhammad Adam">
     <p class="kicker">Research</p>
     <h1 class="title">Finding out how models break.</h1>
     <p class="muted">Three projects and two open-source contributions so far, all on evaluating or defending AI systems.</p>
@@ -265,7 +264,7 @@ footer { border-top: 1px solid var(--rule); padding-block: 26px 40px; color: var
     </div>
   </section>
 
-  <section class="page" id="publications" data-title="Publications | Muhammad Adam">
+  <section class="page" id="p-publications" data-title="Publications | Muhammad Adam">
     <p class="kicker">Publications</p>
     <h1 class="title">Papers</h1>
     <p class="muted">Also on <a href="https://scholar.google.com/citations?user=cRsZ0rYAAAAJ">Google Scholar</a>.</p>
@@ -289,7 +288,7 @@ footer { border-top: 1px solid var(--rule); padding-block: 26px 40px; color: var
     </div>
   </section>
 
-  <section class="page" id="experience" data-title="Experience | Muhammad Adam">
+  <section class="page" id="p-experience" data-title="Experience | Muhammad Adam">
     <p class="kicker">Experience</p>
     <h1 class="title">Research, teaching and study</h1>
 
@@ -363,7 +362,7 @@ footer { border-top: 1px solid var(--rule); padding-block: 26px 40px; color: var
     </ul>
   </section>
 
-  <section class="page" id="cv" data-title="CV | Muhammad Adam">
+  <section class="page" id="p-cv" data-title="CV | Muhammad Adam">
     <p class="kicker">Curriculum vitae</p>
     <h1 class="title">CV</h1>
     <div class="cta">
@@ -385,16 +384,16 @@ footer { border-top: 1px solid var(--rule); padding-block: 26px 40px; color: var
 (function () {
   var pages = Array.prototype.slice.call(document.querySelectorAll(".page"));
   var links = Array.prototype.slice.call(document.querySelectorAll("nav a"));
-  var ids = pages.map(function (p) { return p.id; });
+  var ids = pages.map(function (p) { return p.id.slice(2); });
   function show() {
     var id = (location.hash || "#about").slice(1);
     if (ids.indexOf(id) < 0) id = "about";
-    pages.forEach(function (p) { p.classList.toggle("on", p.id === id); });
+    pages.forEach(function (p) { p.classList.toggle("on", p.id === "p-" + id); });
     links.forEach(function (a) {
       if (a.getAttribute("data-page") === id) a.setAttribute("aria-current", "page");
       else a.removeAttribute("aria-current");
     });
-    var cur = document.getElementById(id);
+    var cur = document.getElementById("p-" + id);
     document.title = cur.getAttribute("data-title") || "Muhammad Adam";
     window.scrollTo(0, 0);
   }
